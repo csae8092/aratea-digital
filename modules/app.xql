@@ -280,18 +280,86 @@ declare function app:toc($node as node(), $model as map(*)) {
         else
             collection(concat($config:app-root, '/data/editions/'))//tei:TEI
     for $title in $docs
-        let $date := $title//tei:title//text()
+        let $date := $title//tei:title[@type='sub']/text()
         let $link2doc := if ($collection)
             then
                 <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
             else
                 <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
+        let $head := $title//tei:head[1]
         return
         <tr>
            <td>{$date}</td>
             <td>
                 {$link2doc}
             </td>
+        </tr>
+};
+
+(:~
+ : creates a basic table of content derived from the documents stored in '/data/descriptions'
+ :)
+declare function app:tocdesc($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        let $mstitle := $title//tei:title[@type='sub']/text()
+        let $link2doc := if ($collection)
+            then
+                <a href="{app:hrefToDoc($title, $collection)}">{$mstitle}</a>
+            else
+                <a href="{app:hrefToDoc($title)}">{$mstitle}</a>
+        let $head := $title//tei:head[1]
+        let $origtitle := $title//tei:head[1]/tei:title/text()
+        let $from := data($head/tei:origDate/@notBefore)
+        let $to := data($head/tei:origDate/@notAfter)
+        let $origpl := $head/tei:origPlace/text()
+        return
+        <tr>
+           <td>{$link2doc}</td>
+            <td>
+                {$origtitle}
+            </td>
+            <td>
+                {$from}
+            </td>
+            <td>{$to}</td>
+            <td>{$origpl}</td>
+            <td>{app:getDocName($title)}</td>
+        </tr>
+};
+
+(:~
+ : creates a basic table of content derived from the documents stored in '/data/texts'
+ :)
+declare function app:toctext($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        let $mstitle := $title//tei:titleStmt/tei:title[1]/text()
+        let $link2doc := if ($collection)
+            then
+                <a href="{app:hrefToDoc($title, $collection)}">{$mstitle}</a>
+            else
+                <a href="{app:hrefToDoc($title)}">{$mstitle}</a>
+        let $mscount := count($title//tei:item)
+        return
+        <tr>
+           <td>{$link2doc}</td>
+            <td>
+                {$mscount}
+            </td>
+            <td>{app:getDocName($title)}</td>
         </tr>
 };
 
