@@ -9,6 +9,7 @@ import module namespace kwic = "http://exist-db.org/xquery/kwic" at "resource:or
 
 declare variable $app:data := $config:app-root||'/data';
 declare variable $app:editions := $config:app-root||'/data/editions';
+declare variable $app:descriptions := $config:app-root||'/data/descriptions';
 declare variable $app:indices := $config:app-root||'/data/indices';
 declare variable $app:placeIndex := $config:app-root||'/data/indices/listplace.xml';
 declare variable $app:personIndex := $config:app-root||'/data/indices/listperson.xml';
@@ -228,21 +229,27 @@ for $title in ($entities, $terms)
 declare function app:listPers($node as node(), $model as map(*)) {
     let $hitHtml := "hits.html?searchkey="
     for $person in doc($app:personIndex)//tei:listPerson/tei:person
-    let $gnd := $person/tei:note/tei:p[3]/text()
-    let $gnd_link := if ($gnd != "no gnd provided") then
-        <a href="{$gnd}">{$gnd}</a>
+    let $persName := $person/tei:persName[1]/text()
+    let $altnames := string-join(subsequence($person//tei:persName, 2), ' ')
+    let $occupation := string-join($person//tei:occupation, ' ')
+    let $ref := data($person/tei:persName[1]/@ref)
+    let $reflink := if($ref)
+        then
+            <a href="{$ref}">{$ref}</a>
         else
-        "-"
-        return
+            "-"
+        
+    return
         <tr>
             <td>
-                <a href="{concat($hitHtml,data($person/@xml:id))}">{$person/tei:persName/tei:surname}</a>
+                <a href="{concat($hitHtml,data($person/@xml:id))}">{$persName}</a>
             </td>
             <td>
-                {$person/tei:persName/tei:forename}
+                {$altnames}
             </td>
+            <td>{$occupation}</td>
             <td>
-                {$gnd_link}
+                {$reflink}
             </td>
         </tr>
 };
@@ -253,6 +260,12 @@ declare function app:listPers($node as node(), $model as map(*)) {
 declare function app:listPlace($node as node(), $model as map(*)) {
     let $hitHtml := "hits.html?searchkey="
     for $place in doc($app:placeIndex)//tei:listPlace/tei:place
+    let $geonames := data($place/tei:placeName/@ref)
+    let $ref := if ($geonames)
+        then
+            <a href="{$geonames}">{$geonames}</a>
+        else
+            "-"
     let $lat := tokenize($place//tei:geo/text(), ' ')[1]
     let $lng := tokenize($place//tei:geo/text(), ' ')[2]
         return
@@ -260,18 +273,17 @@ declare function app:listPlace($node as node(), $model as map(*)) {
             <td>
                 <a href="{concat($hitHtml, data($place/@xml:id))}">{functx:capitalize-first($place/tei:placeName[1])}</a>
             </td>
-            <td>{for $altName in $place//tei:placeName return <li>{$altName/text()}</li>}</td>
-            <td>{$place//tei:idno/text()}</td>
+            <td>{$ref}</td>
             <td>{$lat}</td>
             <td>{$lng}</td>
         </tr>
 };
 
-
 (:~
  : creates a basic table of content derived from the documents stored in '/data/editions'
  :)
-declare function app:toc($node as node(), $model as map(*)) {
+
+declare function app:toctrans($node as node(), $model as map(*)) {
 
     let $collection := request:get-parameter("collection", "")
     let $docs := if ($collection)
@@ -280,19 +292,11 @@ declare function app:toc($node as node(), $model as map(*)) {
         else
             collection(concat($config:app-root, '/data/editions/'))//tei:TEI
     for $title in $docs
-        let $date := $title//tei:title[@type='sub']/text()
-        let $link2doc := if ($collection)
-            then
-                <a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a>
-            else
-                <a href="{app:hrefToDoc($title)}">{app:getDocName($title)}</a>
-        let $head := $title//tei:head[1]
+        let $mstitle := $title//tei:titleStmt/tei:title[1]/text()
         return
         <tr>
-           <td>{$date}</td>
-            <td>
-                {$link2doc}
-            </td>
+           <td>{$mstitle}</td>
+            <td><a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a></td>
         </tr>
 };
 
@@ -360,6 +364,26 @@ declare function app:toctext($node as node(), $model as map(*)) {
                 {$mscount}
             </td>
             <td>{app:getDocName($title)}</td>
+        </tr>
+};
+
+(:~
+ : creates a basic table of content derived from the documents stored in '/data/transcriptions'
+ :)
+declare function app:toctrans($node as node(), $model as map(*)) {
+
+    let $collection := request:get-parameter("collection", "")
+    let $docs := if ($collection)
+        then
+            collection(concat($config:app-root, '/data/', $collection, '/'))//tei:TEI
+        else
+            collection(concat($config:app-root, '/data/editions/'))//tei:TEI
+    for $title in $docs
+        let $mstitle := $title//tei:titleStmt/tei:title[1]/text()
+        return
+        <tr>
+           <td>{$mstitle}</td>
+            <td><a href="{app:hrefToDoc($title, $collection)}">{app:getDocName($title)}</a></td>
         </tr>
 };
 
@@ -452,24 +476,18 @@ declare function app:listBibl($node as node(), $model as map(*)) {
 declare function app:listOrg($node as node(), $model as map(*)) {
     let $hitHtml := "hits.html?searchkey="
     for $item in doc($app:orgIndex)//tei:listOrg/tei:org
-    let $altnames := normalize-space(string-join($item//tei:orgName[@type='alt'], ' '))
-    let $gnd := $item//tei:idno/text()
-    let $gnd_link := if ($gnd) 
-        then
-            <a href="{$gnd}">{$gnd}</a>
-        else
-            'no normdata provided'
-   return
+        let $gnd := data($item/tei:orgName/@ref)
+        let $gnd_link := if($gnd)
+            then
+                <a href="{$gnd}">{$gnd}</a>
+            else
+                "-"
+        return
         <tr>
             <td>
                 <a href="{concat($hitHtml,data($item/@xml:id))}">{$item//tei:orgName[1]/text()}</a>
             </td>
-            <td>
-                {$altnames}
-            </td>
-            <td>
-                {$gnd_link}
-            </td>
+            <td>{$gnd_link}</td>
         </tr>
 };
 

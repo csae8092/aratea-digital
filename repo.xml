@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <meta xmlns="http://exist-db.org/xquery/repo">
-    <description>This is a eXist-db based application to bootstrap the developement process of a digital edition web application</description>
+    <description>A collection of digital editions and manuscript descriptions of medieval transmissions of Aratus‘ (ca. 315/310-240 BC) didactic poem the Phaenomena</description>
     <author ref="http://d-nb.info/gnd/129199176">Peter Andorfer</author>
     <website/>
     <status>alpha</status>

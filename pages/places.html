@@ -1,36 +1,62 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <div data-template="templates:surround" data-template-with="templates/datatable.html" data-template-at="datatable">
-    <div class="card">
-        <div class="card-header" style="text-align:center;">
-            <h1>Ortsregister</h1>
+    <div class="container-fluid">
+        <div class="card">
+            <div class="card-header" style="text-align:center;">
+                <h1>Places</h1>
+                <h3>
+                    <a>
+                        <i class="fas fa-info" title="Info" data-toggle="modal" data-target="#exampleModal"/>
+                    </a>
+                    |
+                    <a href="../../../restxq/aratea-digital/api/collections/indices/listplace.xml">
+                        <i class="fas fa-download" title="show TEI source"/>
+                    </a>
+                </h3>
+            </div>
+            <div class="card-body">
+                <div id="map"/>     
+                <div>
+                    <table id="myTable" class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th class="header"> Place name (normalized) </th>
+                                <th>Normdata</th>
+                                <th>Lat</th>
+                                <th>Lng</th>
+                            </tr>
+                        </thead>
+                        <tfoot style="display:none">
+                            <tr>
+                                <th class="header"> Ortsname (normalisiert) </th>
+                                <th>Normdata</th>
+                                <th>Lat</th>
+                                <th>Lng</th>
+                            </tr>
+                        </tfoot>
+                        <tbody id="myTableBody" style="display:none">
+                            <tr data-template="app:listPlace"/>
+                        </tbody>
+                    </table>
+                </div>       
+            </div>
         </div>
-        <div class="card-body">
-            <div id="map"/>     
-            <div>
-                <table id="myTable" class="table table-striped table-condensed table-hover">
-                    <thead>
-                        <tr>
-                            <th class="header"> Ortsname (normalisiert) </th>
-                            <th>Alternative Schreibweisen</th>
-                            <th>Normdata</th>
-                            <th>Lat</th>
-                            <th>Lng</th>
-                        </tr>
-                    </thead>
-                    <tfoot style="display:none">
-                        <tr>
-                            <th class="header"> Ortsname (normalisiert) </th>
-                            <th>Alternative Schreibweisen</th>
-                            <th>Normdata</th>
-                            <th>Lat</th>
-                            <th>Lng</th>
-                        </tr>
-                    </tfoot>
-                    <tbody id="myTableBody" style="display:none">
-                        <tr data-template="app:listPlace"/>
-                    </tbody>
-                </table>
-            </div>       
+        <div class="modal" tabindex="-1" role="dialog" id="exampleModal">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Info</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            Provide some info about Places
+                        </p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" integrity="sha512-M2wvCLH6DSRazYeZRIm1JnYyh22purTM+FDB5CsyxtQJYeKq83arPe5wgbNmcFXGqiSH2XR8dT/fJISVA1r/zQ==" crossorigin=""/>
@@ -117,7 +143,7 @@
         // loop table rows
         table.rows({ search: "applied" }).every(function() {
         const data = this.data();
-        if( data[3]){
+        if( data[2]){
         placesArray.push(data);
         }
         });
@@ -135,8 +161,8 @@
         geojson.geometry = {
         "type": "Point",
         "coordinates": [
-        element[4],
-        element[3]
+        element[3],
+        element[2]
         ]
         };
         geojson.properties = {

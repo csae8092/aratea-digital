@@ -103,7 +103,7 @@
                             <h3>Zitierhinweis</h3>
                             <blockquote class="blockquote">
                                 <cite title="Source Title">
-                                    <xsl:value-of select="$signatur"/>https://aratea-digital.acdh.oeaw.ac.at</cite>
+                                    <xsl:value-of select="$signatur"/>, hg. v. Michael Span und Michael Prokosch, In: Reading in the Alps, https://rita.acdh.oeaw.ac.at</cite>
                             </blockquote>                    
                         </p>
                     </div>
