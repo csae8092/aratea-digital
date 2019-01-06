@@ -100,7 +100,7 @@
                         </p>
                         <p>
                             <hr/>
-                            <h3>Zitierhinweis</h3>
+                            <h3>How to quote</h3>
                             <blockquote class="blockquote">
                                 <cite title="Source Title">
                                     <xsl:value-of select="$signatur"/>https://aratea-digital.acdh.oeaw.ac.at</cite>
