@@ -59,10 +59,9 @@
                     <xsl:apply-templates select="//tei:body"/>
                 </div>
                 <div class="card-footer text-muted" style="text-align:center">
-                    ACDH-OeAW,
+                    Ivana Dobcheva, 
                     <i>
-                        <xsl:value-of select="//tei:title[@type='sub']"/> - 
-                        <xsl:value-of select="//tei:title[@type='main']"/>
+                        <xsl:value-of select="//tei:title[1]"/>
                     </i>
                     <br/>
                     <a>
