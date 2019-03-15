@@ -13,7 +13,7 @@
     <xsl:param name="progress"/>
     <xsl:variable name="iiif">https://iiif.acdh.oeaw.ac.at/rita/</xsl:variable>
     <xsl:variable name="signatur">
-        <xsl:value-of select=".//tei:institution/text()"/>, <xsl:value-of select=".//tei:repository[1]/text()"/>, <xsl:value-of select=".//tei:msIdentifier/tei:idno[1]/text()"/>
+        <xsl:value-of select="//tei:titleStmt/tei:title/text()"/>
     </xsl:variable>
     <!--
 ##################################
@@ -227,5 +227,9 @@
     <xsl:template match="tei:p[@rend='footnote text']">
         <xsl:apply-templates/>
     </xsl:template>
+    
+    
+    
+    
     
 </xsl:stylesheet>

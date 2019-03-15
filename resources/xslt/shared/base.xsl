@@ -555,5 +555,47 @@
             <xsl:apply-templates/>
         </code>
     </xsl:template>
+    
+    <xsl:template match="tei:ref[starts-with(./@target, '#text__')]">
+        <xsl:variable name="point-to">
+            <xsl:value-of select="substring-after(./@target, '#')"/>
+        </xsl:variable>
+        <xsl:variable name="link">
+            <xsl:value-of select="concat('./show.html?document=', $point-to, '&amp;directory=texts')"/>
+        </xsl:variable>
+        <a>
+            <xsl:attribute name="href">
+                <xsl:value-of select="$link"/>
+            </xsl:attribute>
+            <xsl:apply-templates/>
+        </a>
+    </xsl:template>
+    
+    <xsl:template match="tei:ref[starts-with(./@target, '#desc__')]">
+        <xsl:variable name="point-to">
+            <xsl:value-of select="substring-after(./@target, '#')"/>
+        </xsl:variable>
+        <xsl:variable name="link">
+            <xsl:value-of select="concat('./show.html?document=', $point-to, '&amp;directory=descriptions')"/>
+        </xsl:variable>
+        <a>
+            <xsl:attribute name="href">
+                <xsl:value-of select="$link"/>
+            </xsl:attribute>
+            <xsl:apply-templates/>
+        </a>
+    </xsl:template>
+    
+    <xsl:template match="tei:list">
+        <ul>
+            <xsl:apply-templates/>
+        </ul>
+    </xsl:template>
+    
+    <xsl:template match="tei:list/tei:item">
+        <li>
+            <xsl:apply-templates/>
+        </li>
+    </xsl:template>
  
 </xsl:stylesheet>
