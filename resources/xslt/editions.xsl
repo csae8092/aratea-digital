@@ -11,7 +11,9 @@
     <xsl:param name="currentIx"/>
     <xsl:param name="amount"/>
     <xsl:param name="progress"/>
-    <xsl:variable name="iiif">https://iiif.acdh.oeaw.ac.at/rita/</xsl:variable>
+    <xsl:variable name="backlink">
+        <xsl:value-of select="concat('https://aratea-digital.acdh.oeaw.ac.at/pages/show.html?document=', $document, '&amp;directory=', $collection-name)"/>
+    </xsl:variable>
     <xsl:variable name="signatur">
         <xsl:value-of select=".//tei:institution/text()"/>, <xsl:value-of select=".//tei:repository[1]/text()"/>, <xsl:value-of select=".//tei:msIdentifier/tei:idno[1]/text()"/>
     </xsl:variable>
@@ -101,10 +103,22 @@
                         <p>
                             <hr/>
                             <h3>How to quote</h3>
-                            <blockquote class="blockquote">
-                                <cite title="Source Title">
-                                    <xsl:value-of select="$signatur"/>https://aratea-digital.acdh.oeaw.ac.at</cite>
-                            </blockquote>                    
+                            Ivana Dobcheva, '<xsl:value-of select="//tei:titleStmt/tei:title[@type='sub']/text()"/>' 
+                            <xsl:choose>
+                                <xsl:when test="//tei:revisionDesc//tei:change/@when">
+                                    (revised: <xsl:value-of select="data(.//tei:revisionDesc//tei:change/@when)"/>),
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    (2019),
+                                </xsl:otherwise>
+                            </xsl:choose>
+                            in <i>Aratea Digital, Editions</i>, URL:
+                            <a>
+                                <xsl:attribute name="href">
+                                    <xsl:value-of select="$backlink"/>
+                                </xsl:attribute>
+                                <xsl:value-of select="$backlink"/>
+                            </a>
                         </p>
                     </div>
                 </div>
