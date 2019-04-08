@@ -103,7 +103,7 @@
                         <p>
                             <hr/>
                             <h3>How to quote</h3>
-                            Ivana Dobcheva, '<xsl:value-of select="//tei:titleStmt/tei:title[@type='sub']/text()"/>' 
+                            Ivana Dobcheva, '<xsl:value-of select="//tei:titleStmt/tei:title/text()"/>' 
                             <xsl:choose>
                                 <xsl:when test="//tei:revisionDesc//tei:change/@when">
                                     (revised: <xsl:value-of select="data(.//tei:revisionDesc//tei:change/@when)"/>),
