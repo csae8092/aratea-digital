@@ -323,17 +323,26 @@ declare function app:tocdesc($node as node(), $model as map(*)) {
         let $from := data($head/tei:origDate/@notBefore)
         let $to := data($head/tei:origDate/@notAfter)
         let $origpl := $head/tei:origPlace/text()
+        let $settl := $title//tei:settlement[1]/text()
+        let $lib := $title//tei:repository[1]/text()
+        let $aratea : = for $x in $title//tei:note[@type="aratea"]/tei:rs
+            let $href := substring-after(data($x/@ref), '#')
+            let $link := "show.html?document="||$href||"&amp;directory=texts"
+            return <li><a href="{$link}">{$x}</a></li>
         return
         <tr>
            <td>{$link2doc}</td>
             <td>
                 {$origtitle}
             </td>
+            <td>{$aratea}</td>
+            <td>{count($aratea)}</td>
             <td>
                 {$from}
             </td>
             <td>{$to}</td>
             <td>{$origpl}</td>
+            <td>{$lib} ({$settl})</td>
             <td>{app:getDocName($title)}</td>
         </tr>
 };

@@ -1,4 +1,4 @@
-xquery version "3.0";
+xquery version "3.1";
 
 declare namespace expath="http://expath.org/ns/pkg";
 declare namespace repo="http://exist-db.org/xquery/repo";
@@ -7,13 +7,13 @@ import module namespace config="http://www.digital-archiv.at/ns/aratea-digital/c
 
 let $target-base-default := "C:\Users\pandorfer\Documents\Redmine\konde"
 let $app-name := doc(concat($config:app-root, "/repo.xml"))//repo:target/text()
-return 
+return
 
 <response>{
 try{
     let $source := request:get-parameter("source",$config:app-root)
     let $target-base := request:get-parameter("target-base",$target-base-default)
-    let $synced-files :=  file:sync($source, $target-base||"/"||$app-name, ()) 
+    let $synced-files :=  file:sync($source, $target-base||"/"||$app-name, ())
     return $synced-files
 
 } catch * {
