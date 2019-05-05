@@ -5,6 +5,6 @@ bower_components
 /build/rita-new-1.0.xar
 /build/old_rita-new-1.0.xar
 /build/aratea-digital-1.0.xar
-/data/editions/oko.xml
+/data/*/*.xml
 /tryouts/play.xql
 /build/old_aratea-digital-1.0.xar

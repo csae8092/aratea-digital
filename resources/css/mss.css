@@ -1,0 +1,306 @@
+
+body {
+/*    font: normal 100.01% verdana,arial,helvetica,sans-serif;
+*/    color: black;
+    background: white;
+    margin: 0;
+    padding: 0;
+    min-width: 40em;
+/* Mindestbreite verhindert Anzeigefehler in modernen Browsern */
+}
+/* Kopfzeile */
+#hab_logo img {
+    border: 0;
+}
+#headline {
+    font-size: 0.83em;
+    margin: 0;
+    padding: 0;
+    width: inherit;
+}
+#head {
+    color: #555;
+    background:inherit;
+    position: absolute;
+    font-size: 1.7em;
+    margin: -85px 0 0 0;
+}
+#highlights {
+    text-align:center; 
+    padding:15px; 
+    width:99%;
+}
+#highlights td {
+    width:200px;
+}
+#highlights h3 {
+    text-align:center;
+}
+#projektname {
+    margin-left: 120px;
+}
+/* Ende Kopfzeile */
+/* Inhaltsbereich */
+/* Anfang ID's */
+#Scrollbereich {
+    font-family:verdana,arial,helvetica,sans-serif;
+    font-size:0.8em;
+    text-align:justify;
+    position: absolute;
+    z-index: 1;
+    margin: 20px 30px;
+    width:95%;
+}
+#Scrollbereich a:link, #Scrollbereich a:visited {
+    color: #900129;
+    font-weight: bold;
+    text-decoration: none;
+}
+#Scrollbereich a:focus {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+#Scrollbereich a:hover, #Scrollbereich a:active {
+    color: red;
+    font-weight: bold;
+    text-decoration: underline;
+}
+#quicksearch {
+    margin: -45px 10px 0 0;
+    z-index:101;
+}
+#quicksearch input {
+    font-size:8pt;
+    color: #666666;
+    background: #F6F6F6;
+    z-index:101;
+}
+#search-pagination {
+    display: block;
+    float: left;
+    text-align: center;
+    width: 100%;
+    margin: 0 5px 20px 0;
+    padding: 0;
+    overflow: hidden;
+}
+#search-pagination li {
+    display: inline-block;
+    float: left;
+    width:auto;
+    list-style: none;
+    padding: 4px;
+    text-align: center;
+    background: #f6f6fa;
+    border: 1px solid #dddde8;
+    color: #181a31;
+}
+#title {
+    font-size: 1.2em;
+    text-align: center;
+    width: 90%;
+}
+/* Ende ID's */
+/* Anfang Klassen */
+.searchInp{
+    position: relative;
+    float: left;
+    clear: both;
+    width: 150px;
+    height: 13px;
+    margin-left: 10px;
+    font-size: 11px;
+}
+.searchIcon{
+    position: relative;
+    display: block;
+    float: left;
+    width: 19px;
+    height: 19px;
+    background-image: url('http://www.hab.de/images/search_red.gif');
+    z-index: 101;
+}
+.abstand {
+    border-top: 1px solid #333;
+}
+.author, .msItemAuthor {
+    font-variant: small-caps;
+}
+.msItemTitle {
+    font-variant: small-caps;
+}
+.availability {
+    font-size: small;
+}
+.bold {
+    font-weight: bold;
+}
+.cb {
+    color: #a00;
+    font-weight: bold;
+}
+.content {
+    font-size: 0.8em;
+    margin:25px 35px 0 35px;
+    width: 55%;
+}
+.contenthead {
+    margin:25px 0 0 0;
+}
+.head {
+    font-weight: bold;
+    white-space: nowrap;
+    list-style-type: none;
+}
+.label {
+    font-weight: bold;
+    white-space: nowrap;
+    list-style-type: none;
+}
+.lang {
+    font-size: 10pt;
+    margin: -85px 10px 0 0;
+    width: 10%;
+    z-index:101;
+}
+.citeAs {
+    font-size: 10pt;
+    margin: -65px 10px 0 0;
+    width: 10%;
+    z-index:101;
+}
+.italic, .incipit, .explicit, .quote {font-style:italic; }
+.lb {
+    color: #aaa;
+}
+.left {
+	text-align: left;
+}
+.main {
+    width:100%;
+}
+.msIdentifier {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 10pt 0 10pt 0;
+}
+.msPart {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin: 10px 0 15px 0;
+}
+.mssdoku {
+    padding: 0 0 5px 0;
+}
+.mssDoku {
+    margin: 10px 0 15px 0;
+}
+.normal {
+    font-style:normal !important;
+}
+.nowrap {
+    white-space: nowrap;
+}
+.pb {
+    color: #f00;
+    font-weight: bold;
+}
+.source {
+    font-size: smaller;
+    background-color: #DDD;
+    padding: 3pt;
+    margin-bottom: 20px;
+    width: auto;
+}
+.ref {
+    color: #aaa;
+}
+.respStmt {
+    font-size: xx-small;
+}
+.right {
+    font-size: 0.8em;
+    float: right;
+    text-align: right;
+    width: auto;
+}
+.rights {
+    font-size: smaller;
+    margin-top: 30px;
+    text-align: center;
+}
+.views {
+    font-size: smaller;
+    margin: 10px 0 15px 0;
+    text-align: right;
+}
+/* Ende Klassen */
+/* Anfang Elemente */
+/*a {
+    text-decoration: none;
+    color: #900129;
+}*/
+/*h1 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 12pt;
+    color: #900129;
+    font-weight: 600;
+    text-align: left;
+}*/
+/*h2 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 10pt;
+    color: #900129;
+    font-weight: 600;
+    text-align: left;
+}*/
+/*h3 {
+    font-family: verdana,arial,helvetica,sans-serif;
+    font-size: 10pt;
+    font-weight: 600;
+    color: #4A494A;
+    text-align: left;
+}*/
+form h2 {
+    text-align: center;
+}
+iframe {
+    margin: 0 -25px 0 25px;
+}
+p {
+    text-align: justify;
+}
+td {
+   vertical-align: top;
+}
+td ul {
+   margin: 2pt;
+}
+#desc {
+    margin-top: 30pt;
+}
+/* Ende Elemente */
+/* Formatierung der Suchergebnisse */
+div.result {
+    font-size: x-small;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border-top: 1px solid #dddde8;
+    border-bottom: 1px solid #dddde8;
+    background: #f6f6f8;
+}
+span.hi {
+    font-weight: bold;
+}
+span.title {
+    font-size: medium;
+    padding-bottom: 10px;
+}
+span.url {
+    color: green;
+}
+span.codedirection {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+}

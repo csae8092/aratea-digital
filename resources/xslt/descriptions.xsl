@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns="http://www.w3.org/1999/xhtml" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:tei="http://www.tei-c.org/ns/1.0" exclude-result-prefixes="tei" version="3.0"><!-- <xsl:strip-space elements="*"/>-->
-    <xsl:import href="shared/base.xsl"/>
+    <xsl:import href="shared/tei.xsl"/>
     <xsl:param name="document"/>
     <xsl:param name="app-name"/>
     <xsl:param name="collection-name"/>
@@ -23,6 +23,7 @@
 ##################################
 -->
     <xsl:template match="/">
+        <link rel="stylesheet" type="text/css" href="$app-root/resources/css/mss.css"/>
         <div class="container">
             <div class="card">
                 <div class="card card-header">
@@ -75,31 +76,9 @@
                 </div>
                 <div class="card-body">
                     <div>
-                        <xsl:apply-templates select="//tei:text"/>
+                        <xsl:apply-templates select=".//tei:msDesc"/>
                     </div>
                     <div class="card-footer">
-                        <p style="text-align:center;">
-                            <xsl:for-each select="tei:TEI/tei:text/tei:body//tei:note">
-                                <div class="footnotes">
-                                    <xsl:element name="a">
-                                        <xsl:attribute name="name">
-                                            <xsl:text>fn</xsl:text>
-                                            <xsl:number level="any" format="1" count="tei:note[./tei:p]"/>
-                                        </xsl:attribute>
-                                        <a>
-                                            <xsl:attribute name="href">
-                                                <xsl:text>#fna_</xsl:text>
-                                                <xsl:number level="any" format="1" count="tei:note"/>
-                                            </xsl:attribute>
-                                            <sup>
-                                                <xsl:number level="any" format="1" count="tei:note[./tei:p]"/>
-                                            </sup>
-                                        </a>
-                                    </xsl:element>
-                                    <xsl:apply-templates/>
-                                </div>
-                            </xsl:for-each>
-                        </p>
                         <p>
                             <hr/>
                             <h3>How to quote</h3>
@@ -154,48 +133,6 @@
                                                         </abbr>
                                                         <br/>
                                                     </xsl:for-each><!--<xsl:apply-templates select="//tei:msIdentifier"/>-->
-                                                </td>
-                                            </tr>
-                                        </xsl:if>
-                                        <xsl:if test="//tei:msContents">
-                                            <tr>
-                                                <th>
-                                                    <abbr title="//tei:msContents">Regest</abbr>
-                                                </th>
-                                                <td>
-                                                    <xsl:apply-templates select="//tei:msContents"/>
-                                                </td>
-                                            </tr>
-                                        </xsl:if>
-                                        <xsl:if test="//tei:supportDesc/tei:extent">
-                                            <tr>
-                                                <th>
-                                                    <abbr title="//tei:supportDesc/tei:extent">Extent</abbr>
-                                                </th>
-                                                <td>
-                                                    <xsl:apply-templates select="//tei:supportDesc/tei:extent"/>
-                                                </td>
-                                            </tr>
-                                        </xsl:if>
-                                        <tr>
-                                            <th>Verantwortlich</th>
-                                            <td>
-                                                <xsl:for-each select="//tei:author">
-                                                    <xsl:apply-templates/>
-                                                </xsl:for-each>
-                                            </td>
-                                        </tr>
-                                        <xsl:if test="//tei:titleStmt/tei:respStmt">
-                                            <tr>
-                                                <th>
-                                                    <abbr title="//tei:titleStmt/tei:respStmt">responsible</abbr>
-                                                </th>
-                                                <td>
-                                                    <xsl:for-each select="//tei:titleStmt/tei:respStmt">
-                                                        <p>
-                                                            <xsl:apply-templates/>
-                                                        </p>
-                                                    </xsl:for-each>
                                                 </td>
                                             </tr>
                                         </xsl:if>
